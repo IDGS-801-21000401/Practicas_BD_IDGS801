@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+
+{% block container %}
+{% import "_macros.html" as macros%}
+
+<div class="text-center">
+    <h1>Modificar</h1>
+</div>
+<form name="sent" action="/modificar" id="contactForm" method="POST" novalidate>
+    <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.id, class="form-control")}}
+        </div>
+    </div>
+
+    <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.nombre, class="form-control")}}
+        </div>
+    </div>
+
+    <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.direccion, class="form-control")}}
+        </div>
+    </div>
+
+    <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.telefono, class="form-control")}}
+        </div>
+    </div>
+
+    <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.email, class="form-control")}}
+        </div>
+    </div>
+
+    <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.sueldo, class="form-control")}}
+        </div>
+    </div>
+
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="submit" id="modificar" name="signup" value="Modificar"
+    class="btn btn-warning">
+    <a href="ABC_Completo" class="btn btn-success"><i>Cancelar</i></a>
+</form>
+{%endblock%}
