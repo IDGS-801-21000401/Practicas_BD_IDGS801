@@ -13,3 +13,16 @@
 {% endmacro %}
 
 
+{% macro camposNuevos2(field) %}
+<div class="col">
+    <label style="text-transform: capitalize;">{{field.label}}</label>
+    <div>{{field(**kwargs) | safe }}</div>
+    {% if field.errors%}
+        {% for error in field.errors%}
+            <p style="padding-left: 1%; color: red">{{error}}</p>
+        {%endfor%}
+    {%endif%}
+</div>
+{% endmacro %}
+
+

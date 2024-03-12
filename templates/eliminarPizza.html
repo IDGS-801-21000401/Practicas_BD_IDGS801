@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+
+{% block container %}
+{% import "_macros.html" as macros%}
+
+<div class="text-center">
+    <h1>Eliminar</h1>
+    <p><i>Al eliminar una pizza se dá por finalizado el pedido.</i></p>
+</div>
+<form name="sent" action="/eliminarPizza" id="contactForm" method="POST" novalidate>
+    <div class="row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.id, class="form-control")}}
+        </div>
+    </div>
+
+    <div class="pt-1 row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.nombreCliente, class="form-control")}}
+        </div>
+    </div>
+
+    <div class="pt-1 row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.direccion, class="form-control")}}
+        </div>
+    </div>
+
+    <div class="pt-1 row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.telefono, class="form-control")}}
+        </div>
+    </div>
+
+    <div class="pt-1 row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.tamanioPizza, class="form-control")}}
+        </div>
+    </div>
+
+    <div class="pt-1 row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.ingredientes, class="form-control")}}
+        </div>
+    </div>
+
+    <div class="pt-1 row control-group">
+        <div class="form-group col-xs-12 float-label-form-group-controls">
+            {{macros.camposNuevos(form.cantidadPizzas, class="form-control")}}
+        </div>
+    </div>
+
+   <div class="pt-5">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <input type="submit" style="margin-left: 40%" id="eliminar" name="signup" value="Eliminar"
+    class="btn btn-danger">
+    <a href="pizzas" class="btn btn-success">Cancelar</a>
+   </div>
+</form>
+{%endblock%}

@@ -1,0 +1,138 @@
+{% extends "layout.html" %}
+
+{% block container %}
+{% import "_macros.html" as macros%}
+
+<div class="text-center pt-4">
+    <h1>PIZZERÍA</h1>
+</div>
+<form class="pt-3" name="sent" action="/pizzas" id="contactForm" method="POST" novalidate>
+    <div class="row">
+        <div class="col">
+            <div class="row control-group">
+                <div class="form-group col-xs-12 col-md-4 float-label-form-group-controls"
+                    style="width: 70%; padding-left: 15%">
+                    {{macros.camposNuevos(form.nombreCliente, class="form-control", placeholder="Nombre")}}
+                    <div class="pt-5">
+                        {{macros.camposNuevos(form.fechaCompra, class="form-control", placeholder="Fecha de compra")}}
+                    </div>
+                </div>
+            </div>
+            <div class="row control-group">
+                <div class="pt-5 form-group col-xs-12 float-label-form-group-controls">
+                    {{macros.camposNuevos(form.tamanioPizza, class="form-control", placeholder="Tamaño de pizza")}}
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="form-group col-xs-12 col-md-4 float-label-form-group-controls"
+                style="width: 70%; padding-left: 15%">
+                {{macros.camposNuevos(form.direccion, class="form-control", placeholder="Dirección")}}
+            </div>
+            <div style="padding-top: 34%" class="form-group col-xs-12 float-label-form-group-controls">
+                {{macros.camposNuevos(form.ingredientes, class="form-control", placeholder="Ingredientes")}}
+            </div>
+        </div>
+        <div class="col-3">
+            <div class="form-group col-xs-12 col-md-4 float-label-form-group-controls w-100">
+                {{macros.camposNuevos(form.telefono, class="form-control", placeholder="Teléfono")}}
+                <div style="padding-top: 15%" class="form-group col-xs-12 float-label-form-group-controls">
+                    {{macros.camposNuevos(form.cantidadPizzas, class="form-control", placeholder="Número de pizzas")}}
+                </div>
+                <div style="padding-top: 20%">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="submit" id="send-signup" name="signup" value="Agregar" class="btn btn-success w-100"
+                        style="margin-top: 05%">
+                    <a href="/guardarPedido" class="btn btn-warning" style="width: 45%">Confirmar</a>
+                    <a href="/cancelar" class="btn btn-danger" style="margin-left: 8%; width: 45%">Cancelar</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row pt-5">
+        <div class="col">
+            <h3 class="text-center">Órdenes del día</h3>
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr class="text-center">
+                        <th>Tamaño</th>
+                        <th>Ingredientes</th>
+                        <th>Num. Pizzas</th>
+                        <th>Sub Total</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for index in range(pizzas|length) %}
+                    {% set pizza = pizzas[index] %}
+                    <tr class="text-center">
+                        <td>{{pizza.tamanioPizza}}</td>
+                        <td>{{pizza.ingredientes}}</td>
+                        <td>{{pizza.cantidadPizzas}}</td>
+                        <td>{{pizza.total}}</td>
+                        <td><a href="/eliminarPizzaLista/{{ index }}" class="btn btn-danger">Eliminar</a>
+                            <a href="/modificarPizza/{{ index }}" class="btn btn-warning">Modificar</a>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/terminar" class="btn btn-success" style="margin-left: 20%; width: 40%">Terminar</a>
+        </div>
+        <div class="col-3 text-center pt-4" style="border: 3px solid black;
+        border-radius: 20px;">
+            <h3 for="filtro">Filtrar ventas</h3>
+            <br>
+            <form action="/pizzas" method="post">
+                <label for="filtro_mes">Seleccionar mes:</label>
+                <select name="meses" class="form-select" id="filtro_mes" name="filtro_mes">
+                    <option value="1">Enero</option>
+                    <option value="2">Febrero</option>
+                    <option value="3">Marzo</option>
+                    <option value="4">Abril</option>
+                    <option value="5">Mayo</option>
+                    <option value="6">Junio</option>
+                    <option value="7">Julio</option>
+                    <option value="8">Agosto</option>
+                    <option value="9">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button type="submit" class="btn btn-success">Consultar por mes</button>
+            </form>
+            <br>
+            <br>
+            <form action="/pizzas" method="post">
+            <label for="filtro_dia">Seleccionar día:</label>
+            <select name="dias" class="form-select" id="filtro_dia" name="filtro_dia">
+                <option value="0">Lunes</option>
+                <option value="1">Martes</option>
+                <option value="2">Miercoles</option>
+                <option value="3">Jueves</option>
+                <option value="4">Viernes</option>
+                <option value="5">Sabado</option>
+                <option value="6">Domingo</option>
+            </select>
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button type="submit" class="btn btn-success">Consultar por día</button>
+            </form>
+            <h3>Ventas</h3>
+
+            {% for venta in ventas %}
+            <p>
+                <label class="badge bg-secondary">{{ venta.nombreCliente }}</label>
+                <label class="badge bg-dark">total</label>
+                <label class="badge bg-info">$ {{ venta.total }}</label>
+            </p>
+            {% endfor %}
+            <h4 style="padding-top: 10%; padding-bottom: 0% ; margin-bottom: 0%">
+                <label>Ventas totales</label>
+                <label class="badge bg-light" style="color: black;">$ {{ ventas_total }}</label>
+            </h4>
+        </div>
+    </div>
+
+</form>
+{% endblock %}
